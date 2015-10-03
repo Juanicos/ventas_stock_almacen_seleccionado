@@ -33,6 +33,7 @@ require_model('pedido_cliente.php');
 require_model('presupuesto_cliente.php');
 require_model('serie.php');
 require_model('tarifa.php');
+require_model('stock.php');
 
 class nueva_venta extends fs_controller
 {
@@ -54,6 +55,9 @@ class nueva_venta extends fs_controller
    public $serie;
    public $tipo;
    
+   public $articulos_alm;
+   public $stock;
+   
    public function __construct()
    {
       parent::__construct(__CLASS__, 'nueva venta', 'ventas', FALSE, FALSE);
@@ -70,6 +74,7 @@ class nueva_venta extends fs_controller
       $this->results = array();
       $this->grupo = new grupo_clientes();
       $this->pais = new pais();
+      $this->stock = new stock();
       
       /// cargamos la configuración
       $fsvar = new fs_var();
@@ -244,6 +249,7 @@ class nueva_venta extends fs_controller
          $this->forma_pago = new forma_pago();
          $this->divisa = new divisa();
          
+         $this->articulos_alm = $this->almacen->all();
          
          if( isset($_POST['tipo']) )
          {
@@ -403,6 +409,12 @@ class nueva_venta extends fs_controller
          $this->results[$i]->query = $this->query;
          $this->results[$i]->dtopor = 0;
          $this->results[$i]->cantidad = 1;
+         
+         // buscamos stock por almacen
+         if( isset($_REQUEST['codalmacen']) )
+         {
+             $this->results[$i]->stockalm = $this->stock->total_from_articulo($this->results[$i]->referencia, $_REQUEST['codalmacen']);
+         }
       }
       
       /// ejecutamos las funciones de las extensiones

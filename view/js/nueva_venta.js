@@ -488,7 +488,7 @@ function buscar_articulos()
                      &nbsp; <a href=\"#\" onclick=\"return "+funcion+"\">"+val.referencia+'</a> '+val.descripcion+"</td>\n\
                      <td class=\"text-right\"><a href=\"#\" onclick=\"return "+funcion+"\">"+show_precio(val.pvp*(100-val.dtopor)/100)+"</a></td>\n\
                      <td class=\"text-right\"><a href=\"#\" onclick=\"return "+funcion+"\">"+show_pvp_iva(val.pvp*(100-val.dtopor)/100,val.codimpuesto)+"</a></td>\n\
-                     <td class=\"text-right\">"+val.stockfis+"</td></tr>");
+                     <td class=\"text-right\">"+val.stockfis+"</td><td class=\"text-right\">"+val.stockalm+"</td></tr>");
                }
                else if(val.sevende && val.stockfis <= 0)
                {
@@ -497,7 +497,7 @@ function buscar_articulos()
                      &nbsp; <a href=\"#\" onclick=\"alert('Sin stock.')\">"+val.referencia+'</a> '+val.descripcion+"</td>\n\
                      <td class=\"text-right\"><a href=\"#\" onclick=\"alert('Sin stock.')\">"+show_precio(val.pvp*(100-val.dtopor)/100)+"</a></td>\n\
                      <td class=\"text-right\"><a href=\"#\" onclick=\"alert('Sin stock.')\">"+show_pvp_iva(val.pvp*(100-val.dtopor)/100,val.codimpuesto)+"</a></td>\n\
-                     <td class=\"text-right\">"+val.stockfis+"</td></tr>");
+                     <td class=\"text-right\">"+val.stockfis+"</td><td class=\"text-right\">"+val.stockalm+"</td></tr>");
                }
                
                if(val.query == document.f_buscar_articulos.query.value)
@@ -519,7 +519,7 @@ function buscar_articulos()
             {
                $("#search_results").html("<div class=\"table-responsive\"><table class=\"table table-hover\"><thead><tr>\n\
                   <th class=\"text-left\">Referencia + descripción</th><th class=\"text-right\">Precio</th>\n\
-                  <th class=\"text-right\">Precio+IVA</th><th class=\"text-right\">Stock</th></tr></thead>"
+                  <th class=\"text-right\">Precio+IVA</th><th class=\"text-right\">Stock</th><th class=\"text-right\">en Almacén</th></tr></thead>"
                        +items.join('')+"</table></div>");
             }
          });
@@ -618,6 +618,7 @@ $(document).ready(function() {
       $("#kiwimaru_results").hide();
       $("#nuevo_articulo").hide();
       $("#modal_articulos").modal('show');
+      document.f_buscar_articulos.codalmacen.value=document.f_new_albaran.almacen.value;
       document.f_buscar_articulos.query.focus();
    });
    
